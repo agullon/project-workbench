@@ -48,16 +48,50 @@ Marks the project as done and optionally records closing notes. Closed projects 
 
 ## Project Structure
 
-Each project gets a single `CLAUDE.md` with everything in one file:
+Each project lives under `~/workspace/projects/<name>/`:
 
-```yaml
----
-project: fix-kubelet-timeout
-type: bug
-created: 2026-05-28
-status: active
-jira: https://issues.redhat.com/browse/OCPBUGS-12345
----
+```
+~/workspace/projects/<name>/
+├── CLAUDE.md       # All project state: metadata, plan, progress, notes
+└── .gitignore      # Ignores *.log, *.txt.gz, *.tar.gz
 ```
 
-If CLAUDE.md grows beyond ~200 lines, the largest section is split into its own file with a pointer left in place.
+### CLAUDE.md Layout
+
+A single file holds everything:
+
+```markdown
+---
+project: fix-kubelet-timeout
+type: bug                          # bug | feature | ci-testing | docs | analysis
+created: 2026-05-28
+status: active                     # active | done
+jira: https://issues.redhat.com/browse/OCPBUGS-12345
+related_links:
+  - https://github.com/openshift/microshift/pull/999
+---
+
+# Fix Kubelet Timeout After Fencing
+
+## Summary
+2-3 sentence description + metadata bullets.
+
+## Plan
+Type-specific checklist (e.g., identify root cause, implement fix, test, submit PR).
+
+## Progress
+Milestone checkboxes tracking what's done vs remaining.
+
+## Notes
+Free-form notes added during the project lifecycle.
+```
+
+### Splitting Rule
+
+If `CLAUDE.md` grows beyond ~200 lines, the largest section is split into its own file (e.g., `notes.md`, `investigation.md`) and replaced with a pointer:
+
+```markdown
+## Notes
+
+See [notes.md](notes.md)
+```

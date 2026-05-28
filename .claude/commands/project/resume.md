@@ -41,7 +41,18 @@ has split-out files (referenced via links in CLAUDE.md), read those too.
 
 Show checklist progress as `P.checklist.checked`/`P.checklist.total`.
 
-## Step 4: Task Selection
+## Step 4: Sync CLAUDE.md
+
+Before proceeding, check if the project's CLAUDE.md is stale:
+
+1. If the repo subdirectory exists, run `git log --oneline -5` inside it
+   to see recent commits since the project was last touched.
+2. If there are commits not reflected in Progress or Notes, update
+   CLAUDE.md briefly — check off completed milestones, add a one-line
+   note for anything significant.
+3. Keep updates minimal — one line per new development is enough.
+
+## Step 5: Task Selection
 
 Build a task menu from `P.checklist.unchecked_items` and present via
 AskUserQuestion with options like:

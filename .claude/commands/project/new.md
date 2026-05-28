@@ -78,6 +78,14 @@ related_links:
 4. `## Progress` — `- [x] Project created` + type-specific milestones (unchecked)
 5. `## Notes` — empty section for ongoing work notes
 
+**Housekeeping rule (always include at the bottom of the generated CLAUDE.md):**
+
+```markdown
+<!-- Housekeeping: update this file after meaningful changes (commits,
+decisions, blockers). Check off Progress items, append to Notes, and
+keep Plan current. A quick one-line update is enough. -->
+```
+
 ### Type-Specific Plan & Progress
 
 **Bug** — Plan: Identify root cause, Determine fix, Implement, Test, Submit PR. Progress: Bug details captured, Logs analyzed, Root cause identified, Fix implemented, PR submitted.

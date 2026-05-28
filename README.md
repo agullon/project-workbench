@@ -64,16 +64,16 @@ A single file holds everything:
 
 ```markdown
 ---
-project: fix-kubelet-timeout
-type: bug                          # bug | feature | ci-testing | docs | analysis
-created: 2026-05-28
-status: active                     # active | done
-jira: https://issues.redhat.com/browse/OCPBUGS-12345
+project: <folder-name>
+type: <bug|feature|ci-testing|docs|analysis>
+created: <YYYY-MM-DD>
+status: <active|done>
+jira: <URL or "none">
 related_links:
-  - https://github.com/openshift/microshift/pull/999
+  - <any relevant URLs>
 ---
 
-# Fix Kubelet Timeout After Fencing
+# <Title>
 
 ## Summary
 2-3 sentence description + metadata bullets.

@@ -90,13 +90,21 @@ related_links:
 
 **Analysis** — Plan: Define scope, Gather data, Analyze findings, Write recommendations. Progress: Analysis started, Findings documented, Recommendations made.
 
-### 3c. Generate .gitignore
+### 3c. Clone or link the repository
 
-```gitignore
-*.log
-*.txt.gz
-*.tar.gz
+If a repository URL is known (from JIRA, PR links, or user input), clone it
+into the workspace directory so it sits alongside `CLAUDE.md`:
+
 ```
+~/workspace/projects/<folder-name>/
+├── CLAUDE.md
+└── <repo-name>/    # git clone output
+```
+
+The workspace directory itself is **not** a git repo. All git operations
+happen inside the cloned repo subdirectory.
+
+If no repo is identified yet, skip this step — the user can clone later.
 
 ## Splitting Rule
 

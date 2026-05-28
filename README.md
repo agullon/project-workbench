@@ -53,8 +53,10 @@ Each project lives under `~/workspace/projects/<name>/`:
 ```
 ~/workspace/projects/<name>/
 ├── CLAUDE.md       # All project state: metadata, plan, progress, notes
-└── .gitignore      # Ignores *.log, *.txt.gz, *.tar.gz
+└── <repo>/         # Git repo checkout (cloned or linked here)
 ```
+
+The workspace directory itself is **not** a git repo. The actual repository is always checked out as a subdirectory at the same level as `CLAUDE.md`.
 
 ### CLAUDE.md Layout
 

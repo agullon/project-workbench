@@ -94,9 +94,28 @@ def main():
             print(entry["name"])
         sys.exit(0)
 
+    # Read hook input to get the current working directory.
+    # Only show projects that live under the CWD.
+    try:
+        hook_input = json.loads(sys.stdin.read())
+        cwd = Path(hook_input.get("cwd", "")).resolve()
+    except (json.JSONDecodeError, ValueError):
+        cwd = Path.cwd().resolve()
+
+    resolved_projects = projects_dir.resolve()
+    if not (cwd == resolved_projects or resolved_projects in cwd.parents):
+        sys.exit(0)
+
     entries = collect_projects(projects_dir)
     if not entries:
         sys.exit(0)
+
+    # If CWD is a specific project, only show that one.
+    if cwd != resolved_projects:
+        project_name = cwd.relative_to(resolved_projects).parts[0]
+        entries = [e for e in entries if e["name"] == project_name]
+        if not entries:
+            sys.exit(0)
 
     top = entries[:3]
 

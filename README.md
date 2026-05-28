@@ -1,10 +1,36 @@
-# Project Tracker
+# Project Workbench
 
-Track development tasks with structured workspaces inside Claude Code.
+Lightweight Claude Code skill for managing development task workspaces.
 
 ## Setup
 
-Open Claude Code in this directory. The SessionStart hook will automatically show your recent active projects.
+Install globally by copying commands and scripts to `~/.claude/`:
+
+```bash
+cp -r .claude/commands/project ~/.claude/commands/
+cp scripts/*.py ~/.claude/scripts/
+```
+
+Add the SessionStart hook to `~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/scripts/recent-projects.py"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Projects are stored at `~/workspace/projects/`.
 
 ## Usage
 
@@ -19,7 +45,7 @@ You'll be asked for:
 - JIRA ticket (optional)
 - Additional context (optional)
 
-This creates a workspace under `projects/<name>/` with a CLAUDE.md index, checklists, and type-specific detail files.
+This creates a workspace under `~/workspace/projects/<name>/` with a single CLAUDE.md containing frontmatter, plan checklist, progress tracking, and notes.
 
 ### Resume a project
 
@@ -42,16 +68,7 @@ Marks the project as done and optionally records closing notes. Closed projects 
 
 ## Project Structure
 
-Each project gets:
-
-```
-projects/<name>/
-  CLAUDE.md       # Index with frontmatter, reference files table, plan, progress
-  .gitignore      # Excludes large files
-  <detail files>  # Type-specific (investigation.md, design.md, etc.)
-```
-
-The `CLAUDE.md` frontmatter tracks metadata:
+Each project gets a single `CLAUDE.md` with everything in one file:
 
 ```yaml
 ---
@@ -63,4 +80,4 @@ jira: https://issues.redhat.com/browse/OCPBUGS-12345
 ---
 ```
 
-Detail files are loaded on demand when resuming, keeping context lean.
+If CLAUDE.md grows beyond ~200 lines, the largest section is split into its own file with a pointer left in place.

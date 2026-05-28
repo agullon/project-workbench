@@ -5,7 +5,7 @@ argument-hint: [description]
 
 # New Project Workspace
 
-Create a structured project workspace under `projects/`.
+Create a structured project workspace under `~/workspace/projects/`.
 
 Everything after "new" in `$ARGUMENTS` is an optional initial description.
 
@@ -42,26 +42,19 @@ Ask: "Any additional context? (PR URLs, links, etc.) Say 'no' to skip."
 
 1. If a JIRA ticket was provided, use the ticket ID (e.g., `OCPBUGS-74679`).
 2. Otherwise, generate a kebab-case slug from the description (under 40 chars).
-3. Check if `projects/<name>/` exists. If so, suggest appending `-2`.
+3. Check if `~/workspace/projects/<name>/` exists. If so, suggest appending `-2`.
 4. Confirm the name with the user.
 
 ## Step 3: Create Project Scaffold
 
-### 3a. Create directories
+### 3a. Create directory
 
-Base: `projects/<folder-name>/`
-
-| Type | Extra directories |
-|------|-------------------|
-| Bug investigation | `logs/`, `docs/` |
-| Feature development | `docs/`, `patches/` |
-| CI/testing | `results/`, `scripts/` |
-| Documentation | `drafts/` |
-| Analysis/review | `docs/` |
+Run `mkdir -p ~/workspace/projects/<folder-name>/`
 
 ### 3b. Generate CLAUDE.md
 
-Write `projects/<folder-name>/CLAUDE.md` (~50-80 lines) with this structure:
+Write a single `~/workspace/projects/<folder-name>/CLAUDE.md` containing
+everything — no separate detail files. Keep it under ~200 lines.
 
 **Frontmatter:**
 
@@ -80,10 +73,22 @@ related_links:
 **Sections (in order):**
 
 1. `# <Title>` — from JIRA or description
-2. `## <Type> Summary` — 2-3 sentence description + metadata bullets
-3. `## Reference Files` — table `| File | Content |` with one row per detail file
-4. `## <Plan Section>` — type-specific checklist (see below)
-5. `## Progress` — `- [x] Project created` + type-specific milestone items (unchecked)
+2. `## Summary` — 2-3 sentence description + metadata bullets (Jira, assignee, etc.)
+3. `## Plan` — type-specific checklist (see below)
+4. `## Progress` — `- [x] Project created` + type-specific milestones (unchecked)
+5. `## Notes` — empty section for ongoing work notes
+
+### Type-Specific Plan & Progress
+
+**Bug** — Plan: Identify root cause, Determine fix, Implement, Test, Submit PR. Progress: Bug details captured, Logs analyzed, Root cause identified, Fix implemented, PR submitted.
+
+**Feature** — Plan: Review requirements, Design, Implement, Write tests, Submit PRs. Progress: Design documented, Implementation started, Tests written, PR(s) submitted, PR(s) merged.
+
+**CI/testing** — Plan: Identify failing jobs, Analyze failures, Implement fixes, Validate CI. Progress: CI jobs identified, Failures analyzed, Fixes implemented, CI passing.
+
+**Docs** — Plan: Research and outline, Write draft, Technical review, Submit PR. Progress: Draft written, Technical review, PR submitted.
+
+**Analysis** — Plan: Define scope, Gather data, Analyze findings, Write recommendations. Progress: Analysis started, Findings documented, Recommendations made.
 
 ### 3c. Generate .gitignore
 
@@ -93,123 +98,23 @@ related_links:
 *.tar.gz
 ```
 
-### 3d. Create detail files
+## Splitting Rule
 
-| Type | Files |
-|------|-------|
-| Bug investigation | `investigation.md`, `ci-runs.md` |
-| Feature development | `design.md` |
-| CI/testing | `ci-runs.md`, `test-failures.md` |
-| Documentation | `drafts.md` |
-| Analysis/review | `findings.md` |
-
-### Type-Specific Plan & Progress
-
-**Bug** — Plan heading: `Fix Plan`. Plan: Identify root cause, Determine fix, Implement, Test, Submit PR. Progress: Bug details captured, Logs analyzed, Root cause identified, Fix implemented, PR submitted.
-
-**Feature** — Plan heading: `Implementation Plan`. Plan: Review requirements, Design approach, Implement, Write tests, Submit PRs. Progress: Design documented, Implementation started, Tests written, PR(s) submitted, PR(s) merged.
-
-**CI/testing** — Plan heading: `Test Plan`. Plan: Identify failing jobs, Analyze failures, Implement fixes, Validate CI. Progress: CI jobs identified, Failures analyzed, Fixes implemented, CI passing.
-
-**Docs** — Plan heading: `Outline`. Plan: Research and outline, Write draft, Technical review, Submit PR. Progress: Draft written, Technical review, PR submitted.
-
-**Analysis** — Plan heading: `Analysis Plan`. Plan: Define scope, Gather data, Analyze findings, Write recommendations. Progress: Analysis started, Findings documented, Recommendations made.
-
-## Detail File Templates
-
-### `investigation.md`
+All content lives in CLAUDE.md. If during the project lifecycle CLAUDE.md
+grows beyond ~200 lines, split the largest section into its own file
+(e.g., `notes.md`, `investigation.md`) and replace the section content
+in CLAUDE.md with a pointer:
 
 ```markdown
-# Investigation
+## Notes
 
-## Failure Analysis
-
-_Describe the observed failure and symptoms._
-
-## Root Cause
-
-_Root cause goes here once identified._
-
-## Proposed Fix
-
-| Option | Description | Pros | Cons |
-|--------|-------------|------|------|
-```
-
-### `ci-runs.md`
-
-```markdown
-# CI Runs
-
-<!-- Add a section per CI run analyzed -->
-```
-
-### `design.md`
-
-```markdown
-# Design
-
-## Architecture
-
-_High-level design and component interactions._
-
-## API Changes
-
-_New or modified APIs._
-
-## Related PRs
-
-| PR | Status | Description |
-|----|--------|-------------|
-```
-
-### `test-failures.md`
-
-```markdown
-# Test Failures
-
-| Test | Error | Root Cause | Fix | Status |
-|------|-------|------------|-----|--------|
-```
-
-### `drafts.md`
-
-```markdown
-# Drafts
-
-## Target Documents
-
-| Document | Path | Status |
-|----------|------|--------|
-
-## Outline
-
-_Document outline goes here._
-```
-
-### `findings.md`
-
-```markdown
-# Findings
-
-## Scope
-
-_What is being analyzed and why._
-
-## Findings
-
-_Analysis results._
-
-## Recommendations
-
-| # | Recommendation | Priority | Status |
-|---|----------------|----------|--------|
+See [notes.md](notes.md)
 ```
 
 ## Step 4: Summary
 
 After creating the project:
-1. List files created
+1. Show what was created
 2. Suggest concrete next steps
 3. Remind the user they can resume later with `/project:resume`
 

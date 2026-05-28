@@ -16,8 +16,9 @@ Everything after "close" in `$ARGUMENTS` is parsed as:
 ### 1a. Resolve project name
 
 Extract the first token from `$ARGUMENTS`. Run
-`python3 scripts/resume-project.py <first-token>` via Bash (omit the
-token if none was provided). Parse the JSON and handle by `status`:
+`python3 ~/.claude/scripts/resume-project.py <first-token>` via Bash
+(omit the token if none was provided). Parse the JSON and handle by
+`status`:
 
 - **`ok`** — use `project.name` as the target. Proceed to 1b.
 - **`no_argument`** — check if a project was loaded earlier in this

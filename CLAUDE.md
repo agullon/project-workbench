@@ -1,6 +1,6 @@
-# Project Tracker
+# Project Workbench
 
-Lightweight project workspace tracker. Projects live under `projects/` and provide structured task tracking with checklists, detail files, and status management.
+Lightweight project workspace manager. Projects live under `~/workspace/projects/` and provide structured task tracking with checklists, progress, and notes.
 
 ## Commands
 

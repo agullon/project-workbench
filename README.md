@@ -4,33 +4,13 @@ Lightweight Claude Code skill for managing development task workspaces.
 
 ## Setup
 
-Install globally by copying commands and scripts to `~/.claude/`:
-
 ```bash
-cp -r .claude/commands/project ~/.claude/commands/
-cp scripts/*.py ~/.claude/scripts/
+git clone https://github.com/agullon/project-workbench.git
+cd project-workbench
+./install.sh
 ```
 
-Add the SessionStart hook to `~/.claude/settings.json`:
-
-```json
-{
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ~/.claude/scripts/recent-projects.py"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-Projects are stored at `~/workspace/projects/`.
+This copies commands and scripts to `~/.claude/` and adds a SessionStart hook to `~/.claude/settings.json`. Projects are stored at `~/workspace/projects/`.
 
 ## Usage
 
